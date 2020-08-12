@@ -72,21 +72,22 @@ public function query(array $params) {
 
 Add this on your Construct method :
 ```
-    private $headers;
-    public function __construct()
-    {
-        $token = env('MY_API_KEY');
-		
-		$this->header = array(
-			"AccessToken: " . $token,
-            "Authorization: Bearer " . $token,
-            // "Authorization: bearer " . session('api_key'),
-            // "cache-control: no-cache",
-            // "Content-Type:application/x-www-form-urlencoded;charset=UTF-8",
-            "Content-Type:application/json;charset=UTF-8",
-            "Accept-Charset:UTF-8"
-        );
-    }
+private $headers;
+
+public function __construct()
+{
+	$token = env('MY_API_KEY');
+	
+	$this->header = array(
+		"AccessToken: " . $token,
+		"Authorization: Bearer " . $token,
+		// "Authorization: bearer " . session('api_key'),
+		// "cache-control: no-cache",
+		// "Content-Type:application/x-www-form-urlencoded;charset=UTF-8",
+		"Content-Type:application/json;charset=UTF-8",
+		"Accept-Charset:UTF-8"
+	);
+}
 ```
 
 **Call GET :**
