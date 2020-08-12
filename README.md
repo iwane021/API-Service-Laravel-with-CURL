@@ -71,7 +71,7 @@ public function query(array $params) {
 }
 ```
 
-Add this on your Construct method :
+Add this on your Construct :
 ```
 private $headers;
 
