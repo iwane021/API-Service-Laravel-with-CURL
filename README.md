@@ -4,7 +4,7 @@ This is simple API Service to call endpoint of API
 
 ## Installation :
 - Please put `ApiService.php` to **app/Services**
-- Open **config/app.php** file and add service provider and alias. `config/app.php`
+- Open **config/app.php** file and add service provider and alias.
 ```sh
 'aliases' => [
     ...
