@@ -1,10 +1,12 @@
 # API Service with CURL PHP Laravel
 
-This is simple API Service to call endpoint of API
+Simple API Service to call endpoint of API
 
 ## Installation :
+
 - Please put `ApiService.php` to **app/Services**
-- Open **config/app.php** file and add service provider and alias.
+- Open **config/app.php** file and add service provider in alias.
+
 ```sh
 'aliases' => [
     ...
@@ -13,7 +15,9 @@ This is simple API Service to call endpoint of API
 ```
 
 ## How to Use :
+
 **GET**
+
 ```
 \Api::query([
         'url' => env('BASE_URL_MB_API').'SalesOrderHeader'.$params,
@@ -22,8 +26,9 @@ This is simple API Service to call endpoint of API
 ```
 
 **POST**
-If you using laravel you can make code like this :
+For laravel you can make code like this :
 **$input = $request->all();**
+
 ```
 \Api::query([
         'url' => env('BASE_URL_MB_API').'OrderStore',
@@ -33,7 +38,9 @@ If you using laravel you can make code like this :
 ```
 
 ## Another option to use in PHP :
-You can copy some script on file `ApiService.php` and put to your class, for example :
+
+Copy part of script on file `ApiService.php` and put to your class, for example :
+
 ```
 public function query(array $params) {
 
@@ -62,7 +69,7 @@ public function query(array $params) {
 	$response = curl_exec($curl);
 	$err = curl_error($curl);
 	curl_close($curl);
-	
+
 	if ($err) {
 		return $err;
 	} else {
@@ -71,14 +78,15 @@ public function query(array $params) {
 }
 ```
 
-Add this on your Construct :
+Add this code to _Construct_ :
+
 ```
 private $headers;
 
 public function __construct()
 {
 	$token = env('MY_API_KEY');
-	
+
 	$this->header = array(
 		"AccessToken: " . $token,
 		"Authorization: Bearer " . $token,
@@ -92,9 +100,10 @@ public function __construct()
 ```
 
 **Call GET :**
+
 ```
 $content = $this->query([
-		'url' => env('MY_API_HOST').'api/v1/support',
+		'url' => env('MY_API_HOST').'api/support',
 		'method' => 'GET'
 	]);
 
@@ -102,11 +111,12 @@ $support = json_decode(json_encode($content), true);
 ```
 
 **Call POST :**
+
 ```
 $input = $request->all();
 
 $content = $this->query([
-		'url' => env('MY_API_HOST').'api/v1/support/access/store',
+		'url' => env('MY_API_HOST').'api/support/access/store',
 		'method' => 'POST',
 		'body' => $input
 	]);
@@ -115,10 +125,88 @@ $support = json_decode(json_encode($content), true);
 ```
 
 **To get param request for POST Method :**
+
 ```
 $input = $request->all();
 $content = $request->getContent();
 parse_str($content, $output);
+
+var_dump($output);
+```
+
+## Call API with file_get_contents in PHP :
+
+Copy part of script on file `ContactController.php` and put to your class, for example :
+
+```
+public function streamcontent(array $params)
+    {
+        $this->headers['http']['method'] = $params['method'];
+        $this->headers['http']['content'] = isset($params['body']) ? $params['body'] : '';
+
+        $context = stream_context_create($this->headers);
+        $url = $params['url'];
+        $content = file_get_contents($url, false, $context);
+
+        return $content;
+    }
+```
+
+Add this code to _Construct_ :
+
+```
+private $headers;
+
+    public function __construct()
+    {
+        $token = env('CONTACT_API_KEY');
+
+        $this->headers = [
+            "http" => [
+                "method" => "GET",
+                "header" => "Content-Type: application/json\r\n".
+                        "AccessToken: {$token}\r\n".
+                        "Authorization: Bearer {$token}",
+                "content" => ""
+            ]
+        ];
+    }
+```
+
+**Call GET :**
+
+```
+$content = $this->streamcontent([
+		'url' => env('CONTACT_API_HOST').'api/support/access',
+		'method' => 'GET'
+	]);
+
+$support = json_decode($content, true);
+```
+
+**Call POST :**
+
+```
+$input = $request->all();
+$body = json_encode($input);
+
+$content = $this->streamcontent([
+		'url' => env('CONTACT_API_HOST').'api/support/access/store',
+		'method' => 'POST',
+		'body' => $body
+	]);
+
+$support = json_decode($content, true);
+```
+
+**To get param request for POST Method :**
+
+```
+$output = [
+	'token' => $request->header('AccessToken'),
+	'input' => $request->all(),
+	'email' => $request->input('email')
+]
 
 var_dump($output);
 ```
