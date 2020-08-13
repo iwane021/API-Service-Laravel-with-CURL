@@ -206,9 +206,11 @@ $output = [
 	'token' => $request->header('AccessToken'),
 	'input' => $request->all(),
 	'email' => $request->input('email')
-]
+];
 
 var_dump($output);
 ```
+
+or view _ContactController.php_ for more info file_get_contents.
 
 If you have trouble or problem email to : <iwan.webdeveloper@gmail.com>
