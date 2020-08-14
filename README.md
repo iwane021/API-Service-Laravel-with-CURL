@@ -26,7 +26,6 @@ Simple API Service to call endpoint of API
 ```
 
 **POST**
-For laravel you can make code like this :
 
 ```
 $input = $request->all();
