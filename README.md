@@ -5,7 +5,7 @@ Simple API Service to call endpoint of API
 ## Installation :
 
 - Please put `ApiService.php` to **app/Services**
-- Open **config/app.php** file and add service provider in alias.
+- Open **config/app.php** file and register facade in alias.
 
 ```sh
 'aliases' => [
