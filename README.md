@@ -213,6 +213,6 @@ var_dump($output);
 
 or view _ContactController.php_ for more info file_get_contents.
 
-Thanks to : <https://github.com/dandisy>
+Thanks to : [dandisy](https://github.com/dandisy)
 
 If you have trouble or problem send email to : <iwan.webdeveloper@gmail.com>
