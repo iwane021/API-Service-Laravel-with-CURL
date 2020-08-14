@@ -27,9 +27,9 @@ Simple API Service to call endpoint of API
 
 **POST**
 For laravel you can make code like this :
-**$input = $request->all();**
 
 ```
+$input = $request->all();
 \Api::query([
         'url' => env('BASE_URL_MB_API').'OrderStore',
         'method' => 'POST',
